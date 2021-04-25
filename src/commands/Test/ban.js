@@ -14,12 +14,18 @@ module.exports = {
      if (!reason) return message.channel.send("I do not see a reason.");
      
      let banned = new Discord.MessageEmbed()
-     .setDescription(`Successfully banned ${user} for the reason of: \`${}\``)
+     .setDescription(`Successfully banned ${user} for the reason of: \`${reason}\`.`)
+     .setColor("GREEN")
+     .setTimestamp()
+     .setFooter("Successful", bot.user.displayAvatarURL({ dynamic : true }))
       
      try {
-      
+        user.ban({ reason: reason });
+        message.channel.send(banned).then(sent => {
+            sent.react("✅");
+        });
      } catch (e) {
-     
+         console.log(e)
      }
    }
 }
